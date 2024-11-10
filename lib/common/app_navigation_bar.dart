@@ -19,7 +19,11 @@ class AppNavigationBar extends ConsumerWidget {
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Accueil'),
         BottomNavigationBarItem(
-          icon: Icon(Icons.notifications_none_outlined),
+          icon: Badge(
+            isLabelVisible: true,
+            label: Text("5"),
+            child: Icon(Icons.notifications_none_outlined),
+          ),
           label: 'Notifications',
         ),
       ],
