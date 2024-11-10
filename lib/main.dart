@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
             onPressed: () {},
             child: const Icon(Icons.post_add),
           ),
-          body: const Main(),
+          body: const SafeArea(child: Main()),
         ),
       ),
     );

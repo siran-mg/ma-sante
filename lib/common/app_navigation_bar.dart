@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ma_sante/home/home_page.dart';
 import 'package:ma_sante/view_models/navigation_view_model.dart';
 
 class MenuItem {
@@ -18,7 +19,7 @@ final menus = [
   const MenuItem(
     title: 'Accueil',
     icon: Icon(Icons.home),
-    content: Text('Accueil'),
+    content: HomePage(),
   ),
   const MenuItem(
     title: 'Rechercher',
