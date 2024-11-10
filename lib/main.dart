@@ -21,8 +21,14 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const Scaffold(
-            bottomNavigationBar: AppNavigationBar(), body: Main()),
+        home: Scaffold(
+          bottomNavigationBar: const AppNavigationBar(),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {},
+            child: const Icon(Icons.post_add),
+          ),
+          body: const Main(),
+        ),
       ),
     );
   }
