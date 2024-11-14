@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ma_sante/home/home_page.dart';
+import 'package:ma_sante/search/search_page.dart';
 import 'package:ma_sante/view_models/navigation_view_model.dart';
 
 class MenuItem {
@@ -24,7 +25,7 @@ final menus = [
   const MenuItem(
     title: 'Rechercher',
     icon: Icon(Icons.search),
-    content: Text('Rechercher'),
+    content: SearchPage(),
   ),
   const MenuItem(
     title: 'Notifications',

@@ -7,7 +7,7 @@ part 'navigation_view_model.g.dart';
 class NavigationData {
   final int currentIndex;
 
-  const NavigationData({this.currentIndex = 0});
+  const NavigationData({this.currentIndex = 1});
 
   NavigationData copyWith({int? currentIndex}) {
     return NavigationData(
