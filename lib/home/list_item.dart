@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ListItem extends StatelessWidget {
-  final String imageUrl;
+  final String profileImageUrl;
   final String name;
   final String firstName;
-  final String speciality;
-  final String location;
+  final String description;
+  final DateTime publishedDate;
+  final List<String>? illustrationImages;
 
   const ListItem({
     super.key,
-    required this.imageUrl,
+    required this.profileImageUrl,
     required this.name,
     required this.firstName,
-    required this.speciality,
-    required this.location,
+    required this.description,
+    required this.publishedDate,
+    this.illustrationImages = const [],
   });
 
   @override
   Widget build(BuildContext context) {
+    timeago.setLocaleMessages('fr', timeago.FrMessages());
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -27,77 +32,56 @@ class ListItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 70,
-                        height: 80,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            imageUrl,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '$firstName $name',
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                ),
-                                Text(speciality,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium),
-                                Row(children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  Text(location,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium),
-                                ]),
-                              ],
-                            ),
-                            IconButton.filled(
-                              onPressed: () {},
-                              icon: const Icon(Icons.call),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
+                  ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(profileImageUrl),
+                    ),
+                    title: Text('$firstName $name'),
+                    subtitle: Text(timeago.format(publishedDate, locale: 'fr')),
+                    trailing: TextButton(
+                      onPressed: () {},
+                      child: const Text("Suivre"),
+                    ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(description),
+                  ),
+                  if (illustrationImages != null &&
+                      illustrationImages!.isNotEmpty)
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Image.network(
+                        illustrationImages!.first,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   const SizedBox(
                     height: 8,
                   ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text("15"),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Icon(Icons.thumb_up),
-                        ],
-                      ),
-                      Text("1 commentaire"),
-                    ],
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text("15"),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Icon(Icons.thumb_up),
+                          ],
+                        ),
+                        Text("1 commentaire"),
+                      ],
+                    ),
                   ),
                   const Divider(),
                   const Row(
