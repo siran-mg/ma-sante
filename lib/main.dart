@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
         ),
         home: Scaffold(
           appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: const Text('Ma santé'),
             actions: [
               IconButton(
