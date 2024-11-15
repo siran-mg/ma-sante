@@ -11,26 +11,32 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final random = Random();
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const Carousel(),
-          ...List.generate(
-            10,
-            (index) => ListItem(
-              profileImageUrl:
-                  'https://picsum.photos/200/300?random=${random.nextInt(100)}',
-              name: 'Nom',
-              firstName: 'Prénom',
-              description: loremIpsum(words: random.nextInt(20)),
-              illustrationImages: [
-                'https://picsum.photos/200/300?random=${random.nextInt(100)}'
-              ],
-              publishedDate:
-                  DateTime.now().subtract(Duration(days: random.nextInt(30))),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.post_add),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Carousel(),
+            ...List.generate(
+              10,
+              (index) => ListItem(
+                profileImageUrl:
+                    'https://picsum.photos/200/300?random=${random.nextInt(100)}',
+                name: 'Nom',
+                firstName: 'Prénom',
+                description: loremIpsum(words: random.nextInt(20)),
+                illustrationImages: [
+                  'https://picsum.photos/200/300?random=${random.nextInt(100)}'
+                ],
+                publishedDate:
+                    DateTime.now().subtract(Duration(days: random.nextInt(30))),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

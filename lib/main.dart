@@ -36,10 +36,6 @@ class MyApp extends StatelessWidget {
             ],
           ),
           bottomNavigationBar: const AppNavigationBar(),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            child: const Icon(Icons.post_add),
-          ),
           body: const SafeArea(child: Main()),
         ),
       ),
