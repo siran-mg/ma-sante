@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ma_sante/home/home_page.dart';
+import 'package:ma_sante/notifications/notifications_page.dart';
 import 'package:ma_sante/search/search_page.dart';
 import 'package:ma_sante/view_models/navigation_view_model.dart';
 
@@ -29,8 +30,11 @@ final menus = [
   ),
   const MenuItem(
     title: 'Notifications',
-    icon: Badge(child: Icon(Icons.notifications)),
-    content: Text('Notifications'),
+    icon: Badge(
+      label: Text("10"),
+      child: Icon(Icons.notifications),
+    ),
+    content: NotificationsPage(),
   ),
 ];
 
