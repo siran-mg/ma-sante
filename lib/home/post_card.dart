@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ma_sante/common/full_screen_dialog.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostCard extends StatelessWidget {
@@ -113,34 +114,16 @@ class PostCard extends StatelessWidget {
   _showCommentDialog(BuildContext context) {
     return showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        insetPadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-        ),
-        scrollable: true,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text("Commentaires"),
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.close_rounded),
-            )
-          ],
-        ),
-        content: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: PostCard(
-            profileImageUrl: profileImageUrl,
-            firstName: firstName,
-            name: name,
-            publishedDate: publishedDate,
-            description: description,
-            illustrationImages: illustrationImages,
-            displayActions: false,
-          ),
+      builder: (context) => FullScreenDialog(
+        title: "Commenter",
+        content: PostCard(
+          profileImageUrl: profileImageUrl,
+          firstName: firstName,
+          name: name,
+          publishedDate: publishedDate,
+          description: description,
+          illustrationImages: illustrationImages,
+          displayActions: false,
         ),
       ),
     );
