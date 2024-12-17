@@ -1,8 +1,10 @@
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:ma_sante/common/full_screen_dialog.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:flutter/foundation.dart' as foundation;
 
-class PostCard extends StatelessWidget {
+class PostCard extends StatefulWidget {
   const PostCard({
     super.key,
     required this.profileImageUrl,
@@ -23,6 +25,15 @@ class PostCard extends StatelessWidget {
   final bool? displayActions;
 
   @override
+  State<PostCard> createState() => _PostCardState();
+}
+
+class _PostCardState extends State<PostCard> {
+  final _controller = TextEditingController();
+  final _scrollController = ScrollController();
+  bool _emojiShowing = false;
+
+  @override
   Widget build(BuildContext context) {
     timeago.setLocaleMessages('fr', timeago.FrMessages());
 
@@ -37,10 +48,11 @@ class PostCard extends StatelessWidget {
           children: [
             ListTile(
               leading: CircleAvatar(
-                backgroundImage: NetworkImage(profileImageUrl),
+                backgroundImage: NetworkImage(widget.profileImageUrl),
               ),
-              title: Text('$firstName $name'),
-              subtitle: Text(timeago.format(publishedDate, locale: 'fr')),
+              title: Text('${widget.firstName} ${widget.name}'),
+              subtitle:
+                  Text(timeago.format(widget.publishedDate, locale: 'fr')),
               trailing: TextButton(
                 onPressed: () {},
                 child: const Text("Suivre"),
@@ -48,14 +60,15 @@ class PostCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(description),
+              child: Text(widget.description),
             ),
-            if (illustrationImages != null && illustrationImages!.isNotEmpty)
+            if (widget.illustrationImages != null &&
+                widget.illustrationImages!.isNotEmpty)
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Image.network(
-                  illustrationImages!.first,
+                  widget.illustrationImages!.first,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -84,8 +97,8 @@ class PostCard extends StatelessWidget {
                 ],
               ),
             ),
-            if (displayActions == true) const Divider(),
-            if (displayActions == true)
+            if (widget.displayActions == true) const Divider(),
+            if (widget.displayActions == true)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -111,21 +124,75 @@ class PostCard extends StatelessWidget {
     );
   }
 
-  _showCommentDialog(BuildContext context) {
+  _showCommentDialog(
+    BuildContext context,
+  ) {
     return showDialog(
       context: context,
-      builder: (context) => FullScreenDialog(
-        title: "Commenter",
-        content: PostCard(
-          profileImageUrl: profileImageUrl,
-          firstName: firstName,
-          name: name,
-          publishedDate: publishedDate,
-          description: description,
-          illustrationImages: illustrationImages,
-          displayActions: false,
-        ),
-      ),
+      builder: (context) => StatefulBuilder(builder: (context, setState) {
+        return FullScreenDialog(
+          title: "Commenter",
+          content: PostCard(
+            profileImageUrl: widget.profileImageUrl,
+            firstName: widget.firstName,
+            name: widget.name,
+            publishedDate: widget.publishedDate,
+            description: widget.description,
+            illustrationImages: widget.illustrationImages,
+            displayActions: false,
+          ),
+          actions: [
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _controller,
+                        scrollController: _scrollController,
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                          hintText: 'Saisissez votre commentaire',
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _emojiShowing = !_emojiShowing;
+                              });
+                            },
+                            icon: const Icon(Icons.emoji_emotions),
+                          ),
+                          // contentPadding: EdgeInsets.all(8),
+                          prefixIcon: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                "https://picsum.photos/200/300?random=1",
+                              ),
+                            ),
+                          ),
+                        ),
+                        autofocus: true,
+                        textAlignVertical: TextAlignVertical.center,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.send_sharp),
+                    ),
+                  ],
+                ),
+              ],
+            )
+          ],
+        );
+      }),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

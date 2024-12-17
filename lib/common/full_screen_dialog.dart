@@ -5,10 +5,12 @@ class FullScreenDialog extends StatelessWidget {
     super.key,
     required this.title,
     required this.content,
+    this.actions,
   });
 
   final String title;
   final Widget content;
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,8 @@ class FullScreenDialog extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       scrollable: true,
+      actions: actions,
+      actionsPadding: EdgeInsets.zero,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
